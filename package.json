@@ -1,0 +1,15 @@
+{
+  "name": "nestjs-mono-repo",
+  "version": "0.0.1",
+  "author": "plebea",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.2",
+  "private": true,
+  "scripts": {
+    "server": "yarn workspace server",
+    "reference": "yarn workspace reference"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
