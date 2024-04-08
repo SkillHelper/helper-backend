@@ -10,4 +10,7 @@ export class User {
 
   @Column()
   username: string;
+
+  @Column()
+  profileImage: string;
 }

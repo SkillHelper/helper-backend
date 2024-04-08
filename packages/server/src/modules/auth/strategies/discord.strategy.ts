@@ -16,7 +16,7 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
       clientID: configService.get('DISCORD_CLIENT_ID'),
       clientSecret: configService.get('DISCORD_CLIENT_SECRET'),
       callbackURL: configService.get('DISCORD_CALLBACK_URL'),
-      scope: ['identify', 'email', 'guilds', 'guilds.join'],
+      scope: ['identify', 'email', 'guilds'],
     });
 
     this.guildId = configService.get('DISCORD_GUILD_ID');
@@ -34,6 +34,7 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
     const user = await this.userService.findOrCreate({
       email: profile.email,
       username: profile.username,
+      profileImage: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.webp?size=128`,
     });
 
     cb(null, user);
