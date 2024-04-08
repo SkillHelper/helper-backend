@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { DatabaseModule } from './providers/database.module';
 import { ConfigValidator } from './validators/config.validator';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { ConfigValidator } from './validators/config.validator';
       inject: [ConfigService],
     }),
     DatabaseModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
