@@ -1,6 +1,6 @@
 # Description
 
-Template of Monolithic Repository by Yarn Workspaces with Nest.js
+Backend of Skill Helper
 
 # Bootstrap
 
