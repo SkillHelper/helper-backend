@@ -4175,6 +4175,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"helper-backend@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "helper-backend@workspace:."
+  languageName: unknown
+  linkType: soft
+
 "hexoid@npm:^1.0.0":
   version: 1.0.0
   resolution: "hexoid@npm:1.0.0"
@@ -5831,12 +5837,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nestjs-mono-repo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "nestjs-mono-repo@workspace:."
-  languageName: unknown
-  linkType: soft
-
 "node-abort-controller@npm:^3.0.1":
   version: 3.1.1
   resolution: "node-abort-controller@npm:3.1.1"
@@ -6501,7 +6501,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reference@workspace:packages/reference":
+"reference@workspace:^, reference@workspace:packages/reference":
   version: 0.0.0-use.local
   resolution: "reference@workspace:packages/reference"
   dependencies:
@@ -6823,6 +6823,7 @@ __metadata:
     passport-discord: "npm:^0.1.4"
     passport-jwt: "npm:^4.0.1"
     prettier: "npm:^3.0.0"
+    reference: "workspace:^"
     reflect-metadata: "npm:^0.1.13"
     rxjs: "npm:^7.8.1"
     source-map-support: "npm:^0.5.21"
