@@ -9,7 +9,7 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
   private readonly guildId: string;
 
   constructor(
-    private readonly configService: ConfigService,
+    public readonly configService: ConfigService,
     private readonly userService: UserService,
   ) {
     super({
@@ -28,7 +28,7 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
     profile: any,
     cb: any,
   ) {
-    if (!profile.guilds.some((guild) => guild.id === this.guildId))
+    if (!profile.guilds.some((guild: any) => guild.id === this.guildId))
       return cb(new Error('You are not in the guild'));
 
     const user = await this.userService.findOrCreate({
