@@ -7,6 +7,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
+import { RefreshStrategy } from './strategies/refresh.strategy';
+import { AccessStrategy } from './strategies/access.strategy';
 
 @Module({
   imports: [
@@ -14,13 +16,19 @@ import { UserService } from '../user/user.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        secretOrPrivateKey: config.get('JWT_SECRET'),
+        secret: config.get('JWT_SECRET'),
         signOptions: { expiresIn: config.get('JWT_EXPIRES_IN') },
       }),
     }),
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, UserService, DiscordStrategy],
+  providers: [
+    AuthService,
+    UserService,
+    DiscordStrategy,
+    RefreshStrategy,
+    AccessStrategy,
+  ],
 })
 export class AuthModule {}

@@ -11,6 +11,14 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  async findOneByUUID(uuid: string) {
+    const user = await this.userRepository.findOneBy({ uuid });
+    if (!user)
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+
+    return user;
+  }
+
   async findOrCreate(data: CreateUserDto) {
     const user = await this.userRepository.findOneBy({
       email: data.email,
