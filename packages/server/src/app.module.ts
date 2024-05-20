@@ -7,6 +7,7 @@ import { DatabaseModule } from './providers/database.module';
 import { ConfigValidator } from './validators/config.validator';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { NoticeModule } from './modules/notice/notice.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AuthModule } from './modules/auth/auth.module';
     DatabaseModule,
     UserModule,
     AuthModule,
+    NoticeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

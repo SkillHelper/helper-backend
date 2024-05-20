@@ -23,6 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Util = exports.Cookie = void 0;
+exports.Crawl = exports.Util = exports.Cookie = void 0;
 exports.Cookie = __importStar(require("./cookie"));
 exports.Util = __importStar(require("./util"));
+exports.Crawl = __importStar(require("./crawl"));
