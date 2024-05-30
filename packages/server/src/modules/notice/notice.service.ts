@@ -79,7 +79,6 @@ export class NoticeService {
 
   async sendDiscordMessage(msessage: string) {
     const webhookUrl = this.configService.get('DISCORD_WEBHOOK_URL');
-    await this.httpService.axiosRef;
     await this.httpService.axiosRef(webhookUrl, {
       method: 'POST',
       data: { content: msessage },
