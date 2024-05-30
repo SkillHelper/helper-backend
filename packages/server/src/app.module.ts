@@ -8,6 +8,7 @@ import { ConfigValidator } from './validators/config.validator';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { NoticeModule } from './modules/notice/notice.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { NoticeModule } from './modules/notice/notice.module';
       envFilePath: ['.env', '../../.env'],
       validationSchema: ConfigValidator,
     }),
+    ScheduleModule.forRoot(),
     CacheModule.registerAsync({
       isGlobal: true,
       imports: [ConfigModule],

@@ -1,29 +1,49 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { Cron } from '@nestjs/schedule';
 import { JSDOM } from 'jsdom';
+import { getNoticeDto } from './dto/get.dto';
 
 @Injectable()
 export class NoticeService {
-  constructor(private readonly httpService: HttpService) {}
+  private lastNotices = new Map<string, string>();
 
-  async get() {
-    const date = new Date();
-    const url =
-      'https://meister.hrdkorea.or.kr/sub/3/6/4/informationSquare/enforceData.do';
-    const params = {
-      competYear: date.getFullYear(),
-      competNm: 'J', // J: 지방기능경기대회, P: 전국기능경기대회, I: 세계기능경기대회
-      jobNm: '사이버보안',
-    };
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
+  ) {}
 
-    const response = await this.httpService.axiosRef({
+  async get({ year, scale, category }: getNoticeDto) {
+    const url = this.configService.get('MEISTER_NET_URL');
+    const response = await this.httpService.axiosRef(url, {
       method: 'GET',
-      url,
-      params,
+      params: {
+        competYear: year,
+        competNm: scale,
+        jobNm: category,
+      },
     });
 
     if (response.status === 200) {
       return await this.parse(response.data);
+    }
+  }
+
+  async getLatestNotices() {
+    const url = this.configService.get('MEISTER_NET_URL');
+    const date = new Date();
+    const response = await this.httpService.axiosRef(url, {
+      method: 'GET',
+      params: {
+        competYear: date.getFullYear(),
+        competNm: date.getMonth() <= 6 ? 'J' : 'P',
+        jobNm: '사이버보안',
+      },
+    });
+
+    if (response.status === 200) {
+      return this.parse(response.data);
     }
   }
 
@@ -41,5 +61,28 @@ export class NoticeService {
     });
 
     return notices;
+  }
+
+  @Cron('0 0 * * * 1-5')
+  async modifyNotice() {
+    const notices = await this.getLatestNotices();
+    const url = this.configService.get('MEISTER_NET_URL');
+
+    notices.forEach((notice) => {
+      const lastDate = this.lastNotices.get(notice.title);
+      if (lastDate !== notice.date && notice.title === '공개과제') {
+        this.sendDiscordMessage(`📢 공개과제가 수정되었습니다.\n${url}`);
+      }
+      this.lastNotices.set(notice.title, notice.date);
+    });
+  }
+
+  async sendDiscordMessage(msessage: string) {
+    const webhookUrl = this.configService.get('DISCORD_WEBHOOK_URL');
+    await this.httpService.axiosRef;
+    await this.httpService.axiosRef(webhookUrl, {
+      method: 'POST',
+      data: { content: msessage },
+    });
   }
 }
