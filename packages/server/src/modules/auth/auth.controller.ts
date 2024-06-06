@@ -27,6 +27,12 @@ export class AuthController {
     private readonly configService: ConfigService,
   ) {}
 
+  @Get()
+  @UseGuards(AccessGuard)
+  async get(@CurrentUser() user: User) {
+    return user;
+  }
+
   @Get('discord')
   @UseGuards(DiscordGuard)
   discord() {}
