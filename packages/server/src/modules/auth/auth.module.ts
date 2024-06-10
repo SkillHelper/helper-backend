@@ -9,6 +9,7 @@ import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 import { RefreshStrategy } from './strategies/refresh.strategy';
 import { AccessStrategy } from './strategies/access.strategy';
+import { DiscordModule } from '@discord-nestjs/core';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AccessStrategy } from './strategies/access.strategy';
       }),
     }),
     TypeOrmModule.forFeature([User]),
+    DiscordModule.forFeature(),
   ],
   controllers: [AuthController],
   providers: [

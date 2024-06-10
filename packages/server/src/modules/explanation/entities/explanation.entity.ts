@@ -2,33 +2,20 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('user')
-export class User {
+@Entity()
+export class Explanation {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
-  @Column({ nullable: true })
-  email: string;
+  @Column()
+  title: string;
 
   @Column()
-  username: string;
-
-  @PrimaryColumn()
-  clientId: string;
-
-  @Column()
-  displayName: string;
-
-  @Column()
-  profileImage: string;
-
-  @Column({ nullable: true })
-  refreshToken: string;
+  link: string;
 
   @CreateDateColumn()
   createdAt: Date;
